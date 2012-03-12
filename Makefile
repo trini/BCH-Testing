@@ -10,8 +10,8 @@ COMMON_OBJS = bch.o tester.o
 
 all: bch_sw
 
-bch_sw: $(COMMON_OBJS)
-	$(CC) -o $@ $(COMMON_OBJS)
+bch_sw: $(COMMON_OBJS) libbch_data.o
+	$(CC) -o $@ $(COMMON_OBJS) libbch_data.o
 
 clean:
 	rm -f bch_sw *.o
