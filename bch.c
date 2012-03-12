@@ -65,12 +65,23 @@
  * finite fields GF(2^q). In Rapport de recherche INRIA no 2829, 1996.
  */
 
-#include <common.h>
-#include <ubi_uboot.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 
+#define BITS_PER_LONG	64
+
+#include <linux/types.h>
+#include <linux/mtd/compat.h>
+#include <linux/bch.h>
+#include <linux/errno.h>
 #include <linux/bitops.h>
 #include <asm/byteorder.h>
-#include <linux/bch.h>
+
+/* from u-boot <common.h> */
+#define DIV_ROUND_UP(n,d)	(((n) + (d) - 1) / (d))
+#define ARRAY_SIZE(x)		(sizeof(x) / sizeof((x)[0]))
 
 #if defined(CONFIG_BCH_CONST_PARAMS)
 #define GF_M(_p)               (CONFIG_BCH_CONST_M)
@@ -228,7 +239,7 @@ void encode_bch(struct bch_control *bch, const uint8_t *data,
 	 */
 	while (mlen--) {
 		/* input data is read in big-endian format */
-		w = r[0]^cpu_to_be32(*pdata++);
+		w = r[0]^__cpu_to_be32(*pdata++);
 		p0 = tab0 + (l+1)*((w >>  0) & 0xff);
 		p1 = tab1 + (l+1)*((w >>  8) & 0xff);
 		p2 = tab2 + (l+1)*((w >> 16) & 0xff);
