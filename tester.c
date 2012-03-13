@@ -11,6 +11,8 @@
 
 #include <linux/bch.h>
 
+#include "misc.h"
+
 /*
  * XXX: TODO: BIG WARNING
  *
@@ -24,13 +26,6 @@
  *
  * XXX: TODO: BIG WARNING
  */
-
-#define ECCSIZE			512
-#define ECCBYTES		13
-#define MAX_PRIM_POLY_TEST	8194
-
-extern const uint8_t data[];
-extern const uint8_t ecc_data[];
 
 int main (int argc, char **argv) {
 	struct bch_control *bch = NULL;
